@@ -21,6 +21,8 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
+juce_set_clap_sdk_path(lib/clap)
+
 juce_add_plugin(tuning-workbench-synth
     PRODUCT_NAME "tuning-workbench-synth"
     COMPANY_NAME "Surge Synth Team"  
@@ -36,7 +38,7 @@ juce_add_plugin(tuning-workbench-synth
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT FALSE
     
-    FORMATS AU VST3 Standalone
+    FORMATS AU CLAP VST3 Standalone
 )
 
 juce_generate_juce_header( tuning-workbench-synth )
@@ -89,6 +91,8 @@ target_compile_definitions(tuning-workbench-synth PUBLIC
     JUCE_DISPLAY_SPLASH_SCREEN=0
     JUCE_REPORT_APP_USAGE=0
 
+        JUCE_MODAL_LOOPS_PERMITTED=1
+
     JUCE_ALSA=1
     JUCE_JACK=1
 )
@@ -102,8 +106,6 @@ target_link_libraries(tuning-workbench-synth PRIVATE
     juce::juce_analytics
     juce::juce_audio_utils
     juce::juce_audio_processors
-    juce::juce_blocks_basics
-    juce::juce_box2d
     juce::juce_dsp
 )
 
